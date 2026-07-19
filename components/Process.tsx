@@ -37,6 +37,7 @@ const steps = [
 export default function Process() {
   return (
     <section
+      id="process"
       aria-labelledby="process-heading"
       className="bg-bg-alt py-16 sm:py-24 md:py-32"
     >

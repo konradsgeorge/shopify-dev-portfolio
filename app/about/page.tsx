@@ -16,6 +16,8 @@
  */
 
 import type { Metadata } from "next";
+import Image from "next/image";
+import BioParagraphs from "@/components/BioParagraphs";
 
 export const metadata: Metadata = {
   title: "About — George Allen Donayre",
@@ -51,30 +53,15 @@ export default function AboutPage() {
       >
         <div className="mx-auto w-full max-w-[1200px] px-6 sm:px-8">
           <div className="grid gap-12 lg:grid-cols-[240px_1fr] lg:gap-16">
-            {/* ---- Left: photo slot ---- */}
-            <div>
-              {/*
-               * PLACEHOLDER photo slot.
-               * Replace this div with a real headshot when available:
-               *
-               * import Image from "next/image";
-               * <div className="overflow-hidden rounded-[var(--radius-lg)]">
-               *   <Image
-               *     src="/george.jpg"
-               *     alt="George Allen Donayre"
-               *     width={240}
-               *     height={300}
-               *     className="h-full w-full object-cover"
-               *     priority
-               *   />
-               * </div>
-               *
-               * alt text should describe the image honestly, not keyword-stuff.
-               */}
-              <div
-                role="img"
-                aria-label="Photo placeholder — replace with real headshot"
-                className="aspect-[4/5] w-full max-w-[240px] rounded-[var(--radius-lg)] bg-bg-alt"
+            {/* ---- Left: photo ---- */}
+            <div className="overflow-hidden rounded-[var(--radius-lg)]">
+              <Image
+                src="/george-headshot.jpg"
+                alt="George Allen Donayre, Shopify frontend developer"
+                width={240}
+                height={300}
+                className="aspect-[4/5] w-full max-w-[240px] object-cover object-top"
+                priority
               />
             </div>
 
@@ -84,54 +71,8 @@ export default function AboutPage() {
                 Background
               </h2>
 
-              {/* PLACEHOLDER paragraph 1 — background */}
-              <p className="text-[length:var(--font-size-base)] leading-relaxed text-text-body sm:text-[length:var(--font-size-md)]">
-                {/* PLACEHOLDER: replace with George's real background paragraph */}
-                I&apos;m George Allen Donayre. I build Shopify storefronts using
-                Liquid, custom sections, metafields, and JavaScript. Most of my
-                work starts with a Figma file and ends with a theme that
-                merchants can manage without touching code.
-              </p>
-
-              {/* PLACEHOLDER paragraph 2 — how George works */}
-              <p className="mt-6 text-[length:var(--font-size-base)] leading-relaxed text-text-body sm:text-[length:var(--font-size-md)]">
-                {/* PLACEHOLDER: replace with real copy describing George's working style */}
-                I come in at the implementation stage. I read the design files,
-                ask the questions that surface edge cases before they become
-                revisions, and write code that makes sense to the next developer
-                who opens it. I don&apos;t use page builders or drag-and-drop
-                editors for production work.
-              </p>
-
-              {/* PLACEHOLDER paragraph 3 — specialization */}
-              <p className="mt-6 text-[length:var(--font-size-base)] leading-relaxed text-text-body sm:text-[length:var(--font-size-md)]">
-                {/* PLACEHOLDER: replace with real specialization copy */}
-                My focus is Shopify-specific: theme architecture, custom section
-                schemas, metafield and metaobject integration, and the
-                JavaScript that keeps product pages, filters, and cart
-                interactions running correctly. I don&apos;t do Shopify admin
-                operations, marketing, or store setup work.
-              </p>
-
-              {/* PLACEHOLDER paragraph 4 — experience level */}
-              <p className="mt-6 text-[length:var(--font-size-base)] leading-relaxed text-text-body sm:text-[length:var(--font-size-md)]">
-                {/* PLACEHOLDER: replace with honest, specific experience statement */}
-                I&apos;ve worked on projects ranging from isolated section
-                builds to full Dawn-based theme customizations. I&apos;ve
-                collaborated with design agencies that hand off Figma files and
-                need them implemented exactly, and with store owners who need a
-                specific feature added without disrupting what already works.
-              </p>
-
-              {/* PLACEHOLDER paragraph 5 — personal note, optional */}
-              <p className="mt-6 text-[length:var(--font-size-base)] leading-relaxed text-text-body sm:text-[length:var(--font-size-md)]">
-                {/* PLACEHOLDER: replace or remove this paragraph — keep only if it adds
-                    something real about George that helps an agency or founder trust him */}
-                I care about accessible markup and fast page loads not because
-                they check a box, but because they affect whether a store
-                actually converts. Clean, readable code matters on this kind of
-                site because someone will maintain it after I hand it off.
-              </p>
+              {/* Expandable bio — first 2 paragraphs shown, rest behind toggle */}
+              <BioParagraphs />
 
               {/* ---- CTA links ---- */}
               <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-6">
@@ -160,15 +101,18 @@ export default function AboutPage() {
           Links to the homepage Process section for the full breakdown.
           ================================================================ */}
       <section
-        aria-labelledby="how-i-work-heading"
+        aria-labelledby="working-style-heading"
         className="border-t border-line bg-bg-alt py-16 sm:py-20"
       >
         <div className="mx-auto w-full max-w-[1200px] px-6 sm:px-8">
           <div className="grid gap-8 md:grid-cols-[240px_1fr] md:gap-16">
             {/* Left label — same pattern as LabeledSection on case study pages */}
             <div className="md:pt-1">
-              <span className="text-[length:var(--font-size-xs)] font-semibold uppercase tracking-widest text-text-muted">
-                How I work
+              <span
+                id="working-style-heading"
+                className="text-[length:var(--font-size-xs)] font-semibold uppercase tracking-widest text-text-muted"
+              >
+                Working style
               </span>
             </div>
 
@@ -216,7 +160,7 @@ export default function AboutPage() {
                 href="/#process"
                 className="mt-8 inline-flex items-center gap-1.5 text-[length:var(--font-size-sm)] font-medium text-accent transition-colors hover:text-accent/80 focus-visible:outline-accent"
               >
-                See the full process breakdown
+                See the step-by-step process on the homepage
                 <span aria-hidden="true" className="text-xs">
                   →
                 </span>
