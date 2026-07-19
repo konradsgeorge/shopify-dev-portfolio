@@ -33,7 +33,7 @@ export default function CaseStudyHeader({
       <div className="mx-auto w-full max-w-[1200px] px-6 sm:px-8">
         {/* Back link — lets keyboard and screen reader users orient quickly */}
         <a
-          href="/projects"
+          href="/#selected-work"
           className="mb-10 inline-flex items-center gap-1.5 text-[length:var(--font-size-sm)] font-medium text-text-muted transition-colors hover:text-text-primary focus-visible:outline-accent"
         >
           <span aria-hidden="true">←</span>

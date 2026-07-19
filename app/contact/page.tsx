@@ -110,12 +110,26 @@ export default function ContactPage() {
                     </li>
                     <li>
                       <a
-                        href="https://drive.google.com/file/d/1vjzswF3vNgTlbT34Yq5NPku2zD9W25lW/view?usp=sharing"
+                        href="https://drive.google.com/file/d/1X7geV7pYPvKKN5N0ApA5ZmYiYoRCjsmj/view?usp=sharing"
                         className="text-[length:var(--font-size-sm)] text-text-body transition-colors hover:text-text-primary focus-visible:outline-accent"
                         target="_blank"
                         rel="noopener noreferrer"
                       >
                         Resume
+                      </a>
+                    </li>
+                    <li>
+                      {/*
+                       * WhatsApp direct link. Phone: +63 908 990 6013
+                       * Remove ?text=... if you prefer a blank chat window.
+                       */}
+                      <a
+                        href="https://wa.me/639089906013?text=Hi%20George%2C%20I%20found%20your%20portfolio%20and%20wanted%20to%20reach%20out%20about%20a%20project."
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-[length:var(--font-size-sm)] text-text-body transition-colors hover:text-text-primary focus-visible:outline-accent"
+                      >
+                        WhatsApp
                       </a>
                     </li>
                   </ul>

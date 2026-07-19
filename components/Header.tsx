@@ -10,7 +10,8 @@
  * - Static (not sticky): fits the calm, minimal brand. The Hero section
  *   already accounts for the 64px header height via min-h-[calc(100vh-64px)].
  * - Flat link list only: no dropdowns, no mega nav (§ prompt).
- * - "Work" and "Services" are anchor links to homepage sections.
+ * - "Work" links to the standalone /projects page.
+ *   "Services" is an anchor link to the homepage Services section.
  *   "About" links to the standalone /about page.
  *   "Contact" links to the standalone /contact page.
  * - Primary CTA uses accent color per §3 — same style as Hero/Contact buttons.
@@ -22,7 +23,7 @@
 import { useState } from "react";
 
 const NAV_LINKS = [
-  { label: "Work", href: "/#selected-work" },
+  { label: "Work", href: "/projects" },
   { label: "Services", href: "/#services" },
   { label: "About", href: "/about" },
   { label: "Contact", href: "/contact" },

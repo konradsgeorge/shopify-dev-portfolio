@@ -41,7 +41,7 @@ export default function Hero() {
 
             {/* Secondary action — text link, no second loud button */}
             <a
-              href="https://drive.google.com/file/d/1vjzswF3vNgTlbT34Yq5NPku2zD9W25lW/view?usp=sharing"
+              href="https://drive.google.com/file/d/1X7geV7pYPvKKN5N0ApA5ZmYiYoRCjsmj/view?usp=sharing"
               className="inline-flex items-center gap-1.5 text-[length:var(--font-size-sm)] font-medium text-text-muted transition-colors hover:text-text-primary"
               target="_blank"
               rel="noopener noreferrer"

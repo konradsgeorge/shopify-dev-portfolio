@@ -236,7 +236,7 @@ export default function ContactForm({
         {/* Secondary links — plain text, not competing buttons */}
         <div className="flex items-center gap-4">
           <a
-            href="https://drive.google.com/file/d/1vjzswF3vNgTlbT34Yq5NPku2zD9W25lW/view?usp=sharing"
+            href="https://drive.google.com/file/d/1X7geV7pYPvKKN5N0ApA5ZmYiYoRCjsmj/view?usp=sharing"
             className="text-[length:var(--font-size-sm)] font-medium text-text-muted transition-colors hover:text-text-primary"
             target="_blank"
             rel="noopener noreferrer"
@@ -253,6 +253,22 @@ export default function ContactForm({
             className="text-[length:var(--font-size-sm)] font-medium text-text-muted transition-colors hover:text-text-primary"
           >
             GitHub
+          </a>
+          <span className="text-text-muted" aria-hidden="true">
+            /
+          </span>
+          {/*
+           * WhatsApp direct link. Phone: +63 908 990 6013
+           * The ?text= param prefills the chat opener — George can remove the
+           * entire query string if he prefers a blank chat window.
+           */}
+          <a
+            href="https://wa.me/639089906013?text=Hi%20George%2C%20I%20found%20your%20portfolio%20and%20wanted%20to%20reach%20out%20about%20a%20project."
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[length:var(--font-size-sm)] font-medium text-text-muted transition-colors hover:text-text-primary"
+          >
+            WhatsApp
           </a>
         </div>
       </div>

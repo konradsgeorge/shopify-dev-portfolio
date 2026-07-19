@@ -53,7 +53,7 @@ export default function Footer() {
               </li>
               <li>
                 <a
-                  href="https://drive.google.com/file/d/1vjzswF3vNgTlbT34Yq5NPku2zD9W25lW/view?usp=sharing"
+                  href="https://drive.google.com/file/d/1X7geV7pYPvKKN5N0ApA5ZmYiYoRCjsmj/view?usp=sharing"
                   className="text-[length:var(--font-size-sm)] text-text-muted transition-colors hover:text-text-primary"
                   target="_blank"
                   rel="noopener noreferrer"
