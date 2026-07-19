@@ -64,11 +64,15 @@ export interface CaseStudy {
   /** How it was actually built — two to four short paragraphs */
   implementation: string[];
   /**
-   * Optional screenshot placeholder.
-   * When a real screenshot is ready, replace this string with a path to an
-   * optimized image (e.g. "/screenshots/project-slug.webp") and update the
-   * <LabeledSection> render to use <Image> instead of the placeholder div.
-   * PLACEHOLDER: set to undefined to omit the screenshot block.
+   * Filename of the project screenshot, relative to /public/screenshots/.
+   * Example: "bundle-builder.jpg"
+   * Used on both the ProjectCard and the Implementation section of the case study.
+   * Set to undefined to fall back to a placeholder.
+   */
+  screenshotSrc?: string;
+  /**
+   * Alt text for the screenshot. Describe what is visible in the image honestly.
+   * Required when screenshotSrc is set.
    */
   screenshotAlt?: string;
   /**
@@ -153,13 +157,14 @@ const placeholderProject: CaseStudy = {
     "I added a debounce on the cart-update call so rapid add/remove clicks don't fire multiple redundant network requests, which mattered once the merchant's product set grew past a dozen items.",
     // PLACEHOLDER: add a fourth paragraph if the project warrants it
   ],
+  // Drop the filename here when you have the image ready.
+  // File should go in /public/screenshots/ — e.g. /public/screenshots/bundle-builder.jpg
+  screenshotSrc: "build-a-bundle.png", // e.g. "bundle-builder.jpg"
   screenshotAlt:
-    // PLACEHOLDER: replace with a real image path and descriptive alt text
-    // When replacing: swap the placeholder div in LabeledSection for:
-    // <Image src="/screenshots/custom-filtering.webp" alt={project.screenshotAlt} ... />
+    // PLACEHOLDER: replace with a real descriptive alt text
     'The bundle builder mid-selection, showing four items added, the active 20%-off tier highlighted, and the "add one more to unlock 25% off" prompt.',
   codeSnippet: {
-    label: "JavaScript — tier calculation",
+    label: "JavaScript: tier calculation",
     code: `function getActiveTier(itemCount, tiers) {
   return tiers
     .filter(tier => itemCount >= tier.minItems)
@@ -169,17 +174,17 @@ const placeholderProject: CaseStudy = {
 
   // Challenge → Solution
   challenge:
-    'Client-side tier calculation and the server-side discount function occasionally disagreed at the boundary — a shopper could see "20% off" in the builder UI, but the actual discount function evaluated cart contents slightly differently at checkout, causing a mismatch.',
+    'Client-side tier calculation and the server-side discount function occasionally disagreed at the boundary. A shopper could see "20% off" in the builder UI, but the actual discount function evaluated cart contents slightly differently at checkout, causing a mismatch.',
   solution:
     "I mirrored the exact tier thresholds and rounding logic from the discount function's configuration into the frontend calculation, rather than approximating it, and added an inline note clarifying the displayed tier reflects the same thresholds applied at checkout. This removed the discrepancy without needing to change the discount function itself.",
 
   // Result
   result:
-    "Insert real outcome here. If you have measured metrics (e.g. average order value change, bundle conversion rate), include them. If not, describe the qualitative change: what shoppers can now see and do that they couldn't before, and how it changed the merchant's ability to run this kind of promotion.",
+    "Shoppers can now narrow a collection by material, size, or use case without leaving the page or waiting on a full reload. The merchant manages every filter option directly from the Shopify admin, adding or renaming values as the catalog changes, with no code changes and no dependency on a third-party app. Removing that app also meant one less script loading on every collection page.",
 
   // Lessons learned
   lessonsLearned:
-    "When a frontend calculation mirrors a backend rule, keep the source of truth in one place and mirror it exactly rather than approximating — small rounding or threshold differences show up immediately to shoppers and erode trust in the discount shown.",
+    "Structured content only pays off if every optional field is actually treated as optional in the template. Assuming a field will always be filled in is what turns a flexible content model into a fragile one.",
 
   // Closing CTA
   ctaLine:
@@ -197,9 +202,8 @@ const cartThresholdProject: CaseStudy = {
   liveUrl: undefined,
 
   problem:
-    "The merchant wanted to reward shoppers for hitting specific spend thresholds (e.g. $50, $90) with a free gift, but needed shoppers to actually notice and pick a gift inside the cart drawer rather than missing the offer entirely. A static banner was not enough; shoppers needed to see their progress toward the next threshold and choose from eligible gifts without leaving the cart.",
-  goal:
-    "Build a cart drawer experience where the gift selector activates automatically as cart total crosses each threshold, shows shoppers which threshold they have hit, and lets them pick one gift per tier from a merchant-managed list, all without a page reload.",
+    "The merchant wanted to reward shoppers for hitting specific spend thresholds (e.g. $50, $90) with a free gift, but needed shoppers to actually notice and pick a gift inside the cart drawer rather than missing the offer entirely. A static banner wasn't enough. Shoppers needed to see their progress toward the next threshold and choose from eligible gifts without leaving the cart.",
+  goal: "Build a cart drawer experience where the gift selector activates automatically as cart total crosses each threshold, shows shoppers which threshold they have hit, and lets them pick one gift per tier from a merchant-managed list, all without a page reload.",
   myRole:
     "I built the frontend: the cart-total watcher in JavaScript, the conditional display logic for each gift tier, the gift-selection grid UI in the cart drawer, and the Liquid section that renders eligible gifts from a metafield-defined list. Discount/free-item logic on the order itself was applied through Shopify's native cart and discount tooling, which I integrated against but did not configure myself.",
   technologies: [
@@ -215,10 +219,13 @@ const cartThresholdProject: CaseStudy = {
     "A JavaScript listener watches the cart subtotal on every cart update (add, remove, quantity change) and compares it against the configured thresholds. When a threshold is crossed, the corresponding gift tier activates in the cart drawer with a short transition, and a grid of eligible gift products appears for that tier, letting the shopper pick one.",
     "Selecting a gift adds it to the cart as a $0 line item through the Cart API, tagged so it is identifiable as a promotional gift rather than a purchased item. If the shopper's total later drops below a threshold (e.g. after removing an item), the corresponding gift is automatically removed from the cart to prevent an ineligible free item at checkout.",
   ],
+  // Drop the filename here when you have the image ready.
+  // File should go in /public/screenshots/ — e.g. /public/screenshots/cart-threshold.jpg
+  screenshotSrc: "gift-threshold.png", // e.g. "cart-threshold.jpg"
   screenshotAlt:
     "The cart drawer with the $50 gift tier active, showing the gift-selection grid and a progress indicator toward the $90 tier.",
   codeSnippet: {
-    label: "JavaScript — threshold check and gift sync",
+    label: "JavaScript: threshold check and gift sync",
     code: `function syncGiftTiers(cartTotal, tiers, cart) {
   tiers.forEach(tier => {
     const eligible = cartTotal >= tier.threshold;
@@ -239,7 +246,7 @@ const cartThresholdProject: CaseStudy = {
   result:
     "Insert real outcome here. If you have measured metrics (e.g. average order value change, bundle conversion rate), include them. If not, describe the qualitative change: what shoppers can now see and do that they couldn't before, and how it changed the merchant's ability to run this kind of promotion.",
   lessonsLearned:
-    "Any feature that auto-adds something to the cart needs an equally solid auto-remove path; the failure mode that matters most is not the happy path, it is the shopper undoing part of their order after the reward already triggered.",
+    "Any feature that auto-adds something to the cart needs an equally solid auto-remove path. The failure mode that matters most isn't the happy path, it's the shopper undoing part of their order after the reward already triggered.",
   ctaLine:
     "If you're running spend-based promotions and want gifts to activate automatically in the cart instead of relying on a shopper noticing a banner, that's the kind of cart logic I can build directly into your theme.",
   nextProjectSlug: "before-after-carousel",
@@ -256,8 +263,7 @@ const beforeAfterCarouselProject: CaseStudy = {
 
   problem:
     "The merchant wanted to feature customer before/after results with a photo, quote, timeframe, and result category, but the existing setup required a developer to edit the template every time a new result was added. Non-technical staff had no way to add, reorder, or remove entries on their own.",
-  goal:
-    "Build a carousel section backed by a reusable content structure so the marketing team can add new before/after entries, reorder them, and tag each with a result category, entirely from the Shopify admin.",
+  goal: "Build a carousel section backed by a reusable content structure so the marketing team can add new before/after entries, reorder them, and tag each with a result category, entirely from the Shopify admin.",
   myRole:
     "I built the frontend: the metaobject field structure for each result entry, the Liquid section that queries and renders those entries, the carousel/slider behavior in JavaScript, and the responsive styling. Content entry (photos, quotes, categories) is handled by the merchant's team, not by me.",
   technologies: [
@@ -273,10 +279,13 @@ const beforeAfterCarouselProject: CaseStudy = {
     "The Liquid section queries all published entries of this metaobject type, sorted by the merchant's chosen order, and renders each as a slide. Category tags render as clickable links pointing to the matching collection, so the carousel also functions as a soft navigation aid, not just a testimonial display.",
     "The carousel itself uses native CSS scroll-snap rather than a JavaScript slider library, with a small amount of JavaScript to handle the next/previous button controls and keep the slide counter (e.g. '1 / of 4') in sync with scroll position. This kept the section lightweight and avoided pulling in a dependency for what is fundamentally a horizontal scroll behavior.",
   ],
+  // Drop the filename here when you have the image ready.
+  // File should go in /public/screenshots/ — e.g. /public/screenshots/before-after-carousel.jpg
+  screenshotSrc: "carousell.png", // e.g. "before-after-carousel.jpg"
   screenshotAlt:
     "The results carousel showing one entry expanded, with before/after image toggle, customer quote, duration, and a linked result-category tag.",
   codeSnippet: {
-    label: "JavaScript — syncing slide counter to scroll position",
+    label: "JavaScript: syncing slide counter to scroll position",
     code: `function updateSlideCounter(track, counterEl, totalSlides) {
   const index = Math.round(track.scrollLeft / track.clientWidth);
   counterEl.textContent = \`\${index + 1} / of \${totalSlides}\`;
@@ -289,7 +298,7 @@ const beforeAfterCarouselProject: CaseStudy = {
   result:
     "Insert real outcome here. If you have measured metrics (e.g. engagement with the carousel, click-through to linked collections), include them. If not, describe the qualitative change: what the marketing team can now do independently that they couldn't before, and how that changed their ability to keep this section current.",
   lessonsLearned:
-    "Structured content only pays off if every optional field is actually treated as optional in the template; assuming a field will always be filled in is what turns a flexible content model into a fragile one.",
+    "When a frontend calculation mirrors a backend rule, keep the source of truth in one place and mirror it exactly rather than approximating. Small rounding or threshold differences show up immediately to shoppers and erode trust in the discount shown.",
   ctaLine:
     "If you want a testimonial or results section your team can update on their own without waiting on a developer, that's the kind of metaobject-driven build I can set up in your theme.",
   nextProjectSlug: "custom-bundle-builder",

@@ -15,6 +15,8 @@
  * No new colors, fonts, or border radii introduced.
  */
 
+import Image from "next/image";
+
 interface CodeSnippetProps {
   /** Short label shown above the code block */
   label: string;
@@ -42,13 +44,11 @@ interface LabeledSectionProps {
   /**
    * Optional screenshot placeholder.
    * Value is the alt text for the image — used to describe the screenshot.
-   * PLACEHOLDER: when a real screenshot is ready, swap the <div> placeholder
-   * inside this component for an optimized <Image> tag.
    */
+  screenshotSrc?: string;
   screenshotAlt?: string;
   /**
    * Optional inline code snippet block.
-   * PLACEHOLDER: replace with a real, representative snippet.
    */
   codeSnippet?: CodeSnippetProps;
   /** Background variant. Defaults to "bg" (white). */
@@ -59,6 +59,7 @@ export default function LabeledSection({
   label,
   heading,
   body,
+  screenshotSrc,
   screenshotAlt,
   codeSnippet,
   background = "bg",
@@ -101,36 +102,34 @@ export default function LabeledSection({
               ))}
             </div>
 
-            {/* ---- Optional screenshot placeholder ---- */}
-            {screenshotAlt && (
+            {/* ---- Optional screenshot ---- */}
+            {(screenshotSrc || screenshotAlt) && (
               <div className="mt-10">
-                {/*
-                 * PLACEHOLDER screenshot block.
-                 * Replace this <div> with an optimized <Image> when the real
-                 * screenshot is available:
-                 *
-                 * import Image from "next/image";
-                 * <Image
-                 *   src="/screenshots/your-image.webp"
-                 *   alt={screenshotAlt}
-                 *   width={1280}
-                 *   height={800}
-                 *   className="rounded-[var(--radius-lg)] border border-line"
-                 * />
-                 */}
-                <div
-                  role="img"
-                  aria-label={screenshotAlt}
-                  className="flex aspect-[16/10] w-full items-center justify-center rounded-[var(--radius-lg)] border border-line bg-bg-alt"
-                >
-                  <span className="text-[length:var(--font-size-xs)] text-text-muted">
-                    Screenshot placeholder — replace with real image
-                  </span>
-                </div>
-                <p className="mt-2 text-[length:var(--font-size-xs)] text-text-muted">
-                  {/* Alt text surfaces here as a caption for context */}
-                  {screenshotAlt}
-                </p>
+                {screenshotSrc ? (
+                  <Image
+                    src={`/screenshots/${screenshotSrc}`}
+                    alt={screenshotAlt ?? ""}
+                    width={1280}
+                    height={800}
+                    className="w-full rounded-[var(--radius-lg)] border border-line"
+                  />
+                ) : (
+                  // Fallback placeholder when only alt text is set
+                  <div
+                    role="img"
+                    aria-label={screenshotAlt}
+                    className="flex aspect-[16/10] w-full items-center justify-center rounded-[var(--radius-lg)] border border-line bg-bg-alt"
+                  >
+                    <span className="text-[length:var(--font-size-xs)] text-text-muted">
+                      Screenshot placeholder — replace with real image
+                    </span>
+                  </div>
+                )}
+                {screenshotAlt && (
+                  <p className="mt-2 text-[length:var(--font-size-xs)] text-text-muted">
+                    {screenshotAlt}
+                  </p>
+                )}
               </div>
             )}
 

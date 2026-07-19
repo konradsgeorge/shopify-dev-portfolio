@@ -130,6 +130,7 @@ export default async function CaseStudyPage({
       <LabeledSection
         label="Implementation"
         body={project.implementation}
+        screenshotSrc={project.screenshotSrc}
         screenshotAlt={project.screenshotAlt}
         codeSnippet={project.codeSnippet}
         background="bg"

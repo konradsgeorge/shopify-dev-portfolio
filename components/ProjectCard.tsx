@@ -9,23 +9,34 @@
  * card and the case study page read the same shape from the same data file.
  */
 
+import Image from "next/image";
 import type { CaseStudy } from "@/lib/projects";
 
 interface ProjectCardProps {
   /** Subset of CaseStudy fields needed to render the card. */
-  project: Pick<CaseStudy, "slug" | "title" | "teaser" | "tags">;
+  project: Pick<CaseStudy, "slug" | "title" | "teaser" | "tags" | "screenshotSrc" | "screenshotAlt">;
 }
 
 export default function ProjectCard({ project }: ProjectCardProps) {
-  const { slug, title, teaser, tags } = project;
+  const { slug, title, teaser, tags, screenshotSrc, screenshotAlt } = project;
   const href = `/projects/${slug}`;
 
   return (
     <article className="group flex flex-col overflow-hidden rounded-[var(--radius-lg)] border border-line">
-      {/* ---- Image placeholder — replace with real screenshot ---- */}
-      <div className="aspect-[16/10] w-full bg-bg-alt" aria-hidden="true">
-        {/* Replace this div with an optimized <Image> of the actual project screenshot */}
-      </div>
+      {/* ---- Card image ---- */}
+      {screenshotSrc ? (
+        <div className="aspect-[16/10] w-full overflow-hidden">
+          <Image
+            src={`/screenshots/${screenshotSrc}`}
+            alt={screenshotAlt ?? title}
+            width={800}
+            height={500}
+            className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+          />
+        </div>
+      ) : (
+        <div className="aspect-[16/10] w-full bg-bg-alt" aria-hidden="true" />
+      )}
 
       {/* ---- Card body ---- */}
       <div className="flex flex-1 flex-col gap-3 p-6 sm:p-8">
